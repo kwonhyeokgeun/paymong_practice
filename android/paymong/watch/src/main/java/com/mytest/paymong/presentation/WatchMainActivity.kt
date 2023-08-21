@@ -62,7 +62,7 @@ fun Greeting(greetingName: String) {
     )
 }
 
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
+@Preview(device = Devices.WEAR_OS_LARGE_ROUND, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
     WearApp("Preview Android")
