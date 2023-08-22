@@ -16,11 +16,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
+import com.mytest.paymong.socket.WebSocketClient
 import com.mytest.paymong.ui.theme.PaymongTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var webSocketClient : WebSocketClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        lifecycleScope.launch {
+            webSocketClient = WebSocketClient()
+            webSocketClient.connectWebSocket()
+        }
+
+
+
         setContent {
             PaymongTheme {
                 // A surface container using the 'background' color from the theme
@@ -42,6 +55,8 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+
     }
 }
 
