@@ -20,7 +20,7 @@ public class WebSocketHandler  extends TextWebSocketHandler {
          //session.getHandshakeHeaders().get("mongid"));
         String idStr = session.getHandshakeHeaders().getFirst("id");
         String typeStr = session.getHandshakeHeaders().getFirst("type");
-        log.info("연결 댐 " + idStr+" v" + typeStr);
+        log.info("연결 댐 " + idStr+" " + typeStr);
         if(idStr==null) idStr="1";
         if(typeStr==null) typeStr="1";
         Long id = Long.parseLong(idStr);
