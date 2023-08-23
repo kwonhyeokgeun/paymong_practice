@@ -4,9 +4,11 @@ import com.example.paymong.socketTest.dto.SocketDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +38,22 @@ public class WebSocketService {
         }
 
         SocketDto[] socketDtos = members.get(id);
-        log.info("소캣 상태0" + (socketDtos[0]==null));
-        log.info("소캣 상태1" + (socketDtos[0]==null));
+        log.info(id + "의 소캣 상태 : " + (socketDtos[0]==null)+ ",  " + (socketDtos[1]==null));
+    }
+
+    public void send(int a1, int a2) throws IOException {
+        Long id = 1L;
+        SocketDto[] socketDtos = members.get(id);
+        if(socketDtos==null){
+            log.info("socketDtos null");
+            return;
+        }
+        TextMessage message = new TextMessage(a1 + " "+a2);
+        for(int i=0; i<2; i++){
+            SocketDto socketDto = socketDtos[i];
+            if(socketDto!=null){
+                socketDto.getSession().sendMessage(message);
+            }
+        }
     }
 }
