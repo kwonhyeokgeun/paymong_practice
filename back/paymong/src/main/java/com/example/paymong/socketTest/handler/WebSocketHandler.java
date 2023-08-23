@@ -17,8 +17,15 @@ public class WebSocketHandler  extends TextWebSocketHandler {
     private final WebSocketService webSocketService;
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
-        log.info("연결 댐 "); //session.getHandshakeHeaders().get("mongid"));
-
+         //session.getHandshakeHeaders().get("mongid"));
+        String idStr = session.getHandshakeHeaders().getFirst("id");
+        String typeStr = session.getHandshakeHeaders().getFirst("type");
+        log.info("연결 댐 " + idStr+" v" + typeStr);
+        if(idStr==null) idStr="1";
+        if(typeStr==null) typeStr="1";
+        Long id = Long.parseLong(idStr);
+        int type = Integer.parseInt(typeStr);
+        webSocketService.enter(id, type,session);
     }
 
     @Override

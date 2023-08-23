@@ -1,12 +1,42 @@
 package com.example.paymong.socketTest.service;
 
+import com.example.paymong.socketTest.dto.SocketDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.WebSocketSession;
+
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WebSocketService {
     // https://github.com/kwonhyeokgeun/PayMong/blob/master/backend/management/src/main/java/com/paymong/management/global/socket/service/WebSocketService.java
+
+    private Map<Long, SocketDto[]> members;
+    @PostConstruct
+    private void init(){
+        members = new HashMap<>();
+    }
+
+    public void enter(Long id, int type, WebSocketSession session){
+        SocketDto socketDto = SocketDto.builder()
+                .id(id)
+                .session(session)
+                .build();
+        if(members.containsKey(id)){
+            members.get(id)[type]=socketDto;
+        }else{
+            SocketDto[] socketDtos = new SocketDto[2];
+            socketDtos[type] = socketDto;
+            members.put(id, socketDtos);
+        }
+
+        SocketDto[] socketDtos = members.get(id);
+        log.info("소캣 상태0" + (socketDtos[0]==null));
+        log.info("소캣 상태1" + (socketDtos[0]==null));
+    }
 }
