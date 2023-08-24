@@ -69,5 +69,11 @@ public class WebSocketService {
             }
         }
         if(isEmpty) members.remove(id);
+
+        SocketDto[] socketDtos = members.get(id);
+        if(socketDtos!=null)
+            log.info(id + "의 소캣 상태 : " + (socketDtos[0]!=null)+ ",  " + (socketDtos[1]!=null));
+        else
+            log.info(id + "의 소캣 상태 : " + false+ ",  " + false);
     }
 }
