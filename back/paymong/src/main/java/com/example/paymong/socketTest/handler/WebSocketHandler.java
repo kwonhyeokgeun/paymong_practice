@@ -25,6 +25,7 @@ public class WebSocketHandler  extends TextWebSocketHandler {
         if(typeStr==null) typeStr="1";
         Long id = Long.parseLong(idStr);
         int type = Integer.parseInt(typeStr);
+
         webSocketService.enter(id, type,session);
     }
 
@@ -36,6 +37,15 @@ public class WebSocketHandler  extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status){
         log.info("연결 끊김~ {}", status.getCode());
+        String idStr = session.getHandshakeHeaders().getFirst("id");
+        String typeStr = session.getHandshakeHeaders().getFirst("type");
+        log.info("연결 댐 " + idStr+" " + typeStr);
+        if(idStr==null) idStr="1";
+        if(typeStr==null) typeStr="1";
+        Long id = Long.parseLong(idStr);
+        int type = Integer.parseInt(typeStr);
+
+        webSocketService.out(id,type);
     }
 
 }

@@ -38,7 +38,7 @@ public class WebSocketService {
         }
 
         SocketDto[] socketDtos = members.get(id);
-        log.info(id + "의 소캣 상태 : " + (socketDtos[0]==null)+ ",  " + (socketDtos[1]==null));
+        log.info(id + "의 소캣 상태 : " + (socketDtos[0]!=null)+ ",  " + (socketDtos[1]!=null));
     }
 
     public void send(int a1, int a2) throws IOException {
@@ -55,5 +55,19 @@ public class WebSocketService {
                 socketDto.getSession().sendMessage(message);
             }
         }
+    }
+
+    public void out(Long id, int type){
+        if(!members.containsKey(id)) return;
+        members.get(id)[type]=null;
+        boolean isEmpty=true;
+        for(int i=0; i<2; i++){
+            if(type==i)continue;
+            if(members.get(id)[i]!=null){
+                isEmpty=false;
+                break;
+            }
+        }
+        if(isEmpty) members.remove(id);
     }
 }
