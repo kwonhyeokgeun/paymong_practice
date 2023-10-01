@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!--인터넷 사용권한 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 인터넷 사용권한 -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Paymong"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <service
+            android:name="com.mytest.paymong.AppDataLayerListenerService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/start-activity"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".RemoteTest"
+            android:exported="false"
+            android:label="@string/title_activity_remote_test"
+            android:theme="@style/Theme.Paymong" />
+        <activity
+            android:name=".UITestActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
