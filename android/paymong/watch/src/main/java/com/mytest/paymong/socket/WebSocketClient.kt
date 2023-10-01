@@ -22,7 +22,7 @@ class WebSocketClient {
     private val request = Request.Builder()
         .url(url)
         .addHeader("id","1")
-        .addHeader("type","0")
+        .addHeader("type","1")
         .build()
 
 
@@ -38,7 +38,7 @@ class WebSocketClient {
 
             override fun onMessage(webSocket: WebSocket, text: String) {
                 super.onMessage(webSocket, text)
-                Log.d("페이몽","onMessage" + text)
+                Log.d("페이몽","onMessage")
                 // 웹소켓으로부터 메시지를 수신했을 때 실행되는 코드
             }
 
