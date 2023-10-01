@@ -74,6 +74,6 @@ public class WebSocketService {
         if(socketDtos!=null)
             log.info(id + "의 소캣 상태 : " + (socketDtos[0]!=null)+ ",  " + (socketDtos[1]!=null));
         else
-            log.info(id + "의 소캣 상태 : " + false+ ",  " + false);
+            log.info(id + "의 소캣 상태! : " + false+ ",  " + false);
     }
 }
