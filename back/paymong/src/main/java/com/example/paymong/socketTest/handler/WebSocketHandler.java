@@ -17,8 +17,16 @@ public class WebSocketHandler  extends TextWebSocketHandler {
     private final WebSocketService webSocketService;
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
-        log.info("연결 댐 "); //session.getHandshakeHeaders().get("mongid"));
+         //session.getHandshakeHeaders().get("mongid"));
+        String idStr = session.getHandshakeHeaders().getFirst("id");
+        String typeStr = session.getHandshakeHeaders().getFirst("type");
+        log.info("연결 댐 id:{} type:{}", idStr, typeStr);
+        if(idStr==null) idStr="1";
+        if(typeStr==null) typeStr="1";
+        Long id = Long.parseLong(idStr);
+        int type = Integer.parseInt(typeStr);
 
+        webSocketService.enter(id, type,session);
     }
 
     @Override
@@ -28,7 +36,17 @@ public class WebSocketHandler  extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status){
-        log.info("연결 끊김~ {}", status.getCode());
+
+        String idStr = session.getHandshakeHeaders().getFirst("id");
+        String typeStr = session.getHandshakeHeaders().getFirst("type");
+        log.info("연결 끊김!! id:{} type:{}", idStr, typeStr);
+        if(idStr==null) idStr="1";
+        if(typeStr==null) typeStr="1";
+
+        Long id = Long.parseLong(idStr);
+        int type = Integer.parseInt(typeStr);
+
+        webSocketService.out(id,type);
     }
 
 }
